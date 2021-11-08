@@ -1,0 +1,103 @@
+{
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "expires_at": {
+          "type": "string"
+        },
+        "renew_before": {
+          "type": "string"
+        }
+      }
+    },
+    "credentials": {
+      "type": "object"
+    },
+    "syslog_drain_url": {
+      "type": "string"
+    },
+    "route_service_url": {
+      "type": "string"
+    },
+    "volume_mounts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "driver",
+          "container_dir",
+          "mode",
+          "device_type",
+          "device"
+        ],
+        "properties": {
+          "driver": {
+            "type": "string"
+          },
+          "container_dir": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "r",
+              "rw"
+            ]
+          },
+          "device_type": {
+            "type": "string",
+            "enum": [
+              "shared"
+            ]
+          },
+          "device": {
+            "type": "object",
+            "required": [
+              "volume_id"
+            ],
+            "properties": {
+              "volume_id": {
+                "type": "string"
+              },
+              "mount_config": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "endpoints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "host",
+          "ports"
+        ],
+        "properties": {
+          "host": {
+            "type": "string"
+          },
+          "ports": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "protocol": {
+            "type": "string",
+            "enum": [
+              "tcp",
+              "udp",
+              "all"
+            ],
+            "default": "tcp"
+          }
+        }
+      }
+    }
+  }
+}

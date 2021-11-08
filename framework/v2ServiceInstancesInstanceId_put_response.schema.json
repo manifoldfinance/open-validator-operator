@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "dashboard_url": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "labels": {
+          "type": "object"
+        },
+        "attributes": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

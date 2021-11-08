@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "properties": {
+    "service_id": {
+      "type": "string"
+    },
+    "plan_id": {
+      "type": "string"
+    },
+    "dashboard_url": {
+      "type": "string"
+    },
+    "parameters": {
+      "type": "object"
+    },
+    "maintenance_info": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "labels": {
+          "type": "object"
+        },
+        "attributes": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

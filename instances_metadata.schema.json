@@ -1,0 +1,214 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "availabilityDomain": {
+      "type": "string"
+    },
+    "faultDomain": {
+      "type": "string"
+    },
+    "compartmentId": {
+      "type": "string"
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "hostname": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "ssh_authorized_keys": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "ssh_authorized_keys"
+      ]
+    },
+    "region": {
+      "type": "string"
+    },
+    "canonicalRegionName": {
+      "type": "string"
+    },
+    "ociAdName": {
+      "type": "string"
+    },
+    "regionInfo": {
+      "type": "object",
+      "properties": {
+        "realmKey": {
+          "type": "string"
+        },
+        "realmDomainComponent": {
+          "type": "string"
+        },
+        "regionKey": {
+          "type": "string"
+        },
+        "regionIdentifier": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "realmKey",
+        "realmDomainComponent",
+        "regionKey",
+        "regionIdentifier"
+      ]
+    },
+    "shape": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "timeCreated": {
+      "type": "integer"
+    },
+    "agentConfig": {
+      "type": "object",
+      "properties": {
+        "monitoringDisabled": {
+          "type": "boolean"
+        },
+        "managementDisabled": {
+          "type": "boolean"
+        },
+        "allPluginsDisabled": {
+          "type": "boolean"
+        },
+        "pluginsConfig": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "desiredState": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "desiredState"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "desiredState": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "desiredState"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "desiredState": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "desiredState"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "desiredState": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "desiredState"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "monitoringDisabled",
+        "managementDisabled",
+        "allPluginsDisabled",
+        "pluginsConfig"
+      ]
+    },
+    "freeformTags": {
+      "type": "object",
+      "properties": {
+        "Department": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "Department"
+      ]
+    },
+    "definedTags": {
+      "type": "object",
+      "properties": {
+        "Operations": {
+          "type": "object",
+          "properties": {
+            "CostCenter": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "CostCenter"
+          ]
+        }
+      },
+      "required": [
+        "Operations"
+      ]
+    }
+  },
+  "required": [
+    "availabilityDomain",
+    "faultDomain",
+    "compartmentId",
+    "displayName",
+    "hostname",
+    "id",
+    "image",
+    "metadata",
+    "region",
+    "canonicalRegionName",
+    "ociAdName",
+    "regionInfo",
+    "shape",
+    "state",
+    "timeCreated",
+    "agentConfig",
+    "freeformTags",
+    "definedTags"
+  ]
+}

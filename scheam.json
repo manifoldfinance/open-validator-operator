@@ -1,0 +1,663 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Open Service Broker API",
+  "version": "master - might contain changes that are not yet released",
+  "description": "The Open Service Broker API defines an HTTP(S) interface between Platforms and Service Brokers.",
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "description": "The version of this schema that will be used to validate JSON data"
+    },
+    "catalog": {
+      "$ref": "#/definitions/Catalog",
+      "description": "catalog response"
+    },
+    "serviceInstanceProvisionRequest": {
+      "$ref": "#/definitions/ServiceInstanceProvisionRequest",
+      "description": "parameters for the requested service instance provision"
+    },
+    "serviceInstanceProvisionResponse": {
+      "$ref": "#/definitions/ServiceInstanceProvisionResponse",
+      "description": "Created"
+    },
+    "serviceInstanceAsyncOperation": {
+      "$ref": "#/definitions/ServiceInstanceAsyncOperation",
+      "description": "Accepted"
+    },
+    "serviceInstanceUpdateRequest": {
+      "$ref": "#/definitions/ServiceInstanceUpdateRequest",
+      "description": "parameters for the requested service instance update"
+    },
+    "object-1": {
+      "type": "object",
+      "description": "OK"
+    },
+    "object-2": {
+      "type": "object",
+      "description": "OK"
+    },
+    "asyncOperation": {
+      "$ref": "#/definitions/AsyncOperation",
+      "description": "Accepted"
+    },
+    "serviceInstanceResource": {
+      "$ref": "#/definitions/ServiceInstanceResource",
+      "description": "OK"
+    },
+    "lastOperationResource": {
+      "$ref": "#/definitions/LastOperationResource",
+      "description": "OK"
+    },
+    "serviceBindingRequest": {
+      "$ref": "#/definitions/ServiceBindingRequest",
+      "description": "parameters for the requested service binding"
+    },
+    "serviceBindingResponse": {
+      "$ref": "#/definitions/ServiceBindingResponse",
+      "description": "Created"
+    },
+    "object-3": {
+      "type": "object",
+      "description": "OK"
+    },
+    "serviceBindingResource": {
+      "$ref": "#/definitions/ServiceBindingResource",
+      "description": "OK"
+    },
+    "error": {
+      "$ref": "#/definitions/Error",
+      "description": "Unexpected"
+    }
+  },
+  "required": [
+    "schemaVersion"
+  ],
+  "definitions": {
+    "Catalog": {
+      "type": "object",
+      "properties": {
+        "services": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Service"
+          }
+        }
+      }
+    },
+    "Service": {
+      "type": "object",
+      "required": [
+        "name",
+        "id",
+        "description",
+        "bindable",
+        "plans"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requires": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "syslog_drain",
+              "route_forwarding",
+              "volume_mount"
+            ]
+          }
+        },
+        "bindable": {
+          "type": "boolean"
+        },
+        "instances_retrievable": {
+          "type": "boolean"
+        },
+        "bindings_retrievable": {
+          "type": "boolean"
+        },
+        "allow_context_updates": {
+          "type": "boolean"
+        },
+        "metadata": {
+          "$ref": "#/definitions/Metadata"
+        },
+        "dashboard_client": {
+          "$ref": "#/definitions/DashboardClient"
+        },
+        "binding_rotatable": {
+          "type": "boolean"
+        },
+        "plan_updateable": {
+          "type": "boolean"
+        },
+        "plans": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Plan"
+          }
+        }
+      }
+    },
+    "DashboardClient": {
+      "type": "object",
+      "required": [
+        "id",
+        "secret"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "secret": {
+          "type": "string"
+        },
+        "redirect_uri": {
+          "type": "string"
+        }
+      }
+    },
+    "Plan": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/definitions/Metadata"
+        },
+        "free": {
+          "type": "boolean",
+          "default": true
+        },
+        "bindable": {
+          "type": "boolean"
+        },
+        "plan_updateable": {
+          "type": "boolean"
+        },
+        "schemas": {
+          "$ref": "#/definitions/SchemasObject"
+        },
+        "maximum_polling_duration": {
+          "type": "integer"
+        },
+        "maintenance_info": {
+          "$ref": "#/definitions/MaintenanceInfo"
+        },
+        "binding_rotatable": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "SchemasObject": {
+      "type": "object",
+      "properties": {
+        "service_instance": {
+          "$ref": "#/definitions/ServiceInstanceSchemaObject"
+        },
+        "service_binding": {
+          "$ref": "#/definitions/ServiceBindingSchemaObject"
+        }
+      }
+    },
+    "ServiceInstanceSchemaObject": {
+      "type": "object",
+      "properties": {
+        "create": {
+          "$ref": "#/definitions/SchemaParameters"
+        },
+        "update": {
+          "$ref": "#/definitions/SchemaParameters"
+        }
+      }
+    },
+    "ServiceBindingSchemaObject": {
+      "type": "object",
+      "properties": {
+        "create": {
+          "$ref": "#/definitions/SchemaParameters"
+        }
+      }
+    },
+    "SchemaParameters": {
+      "type": "object",
+      "properties": {
+        "parameters": {
+          "$ref": "#/definitions/JSONSchemaObject"
+        }
+      }
+    },
+    "JSONSchemaObject": {
+      "type": "object"
+    },
+    "ServiceInstanceResource": {
+      "type": "object",
+      "properties": {
+        "service_id": {
+          "type": "string"
+        },
+        "plan_id": {
+          "type": "string"
+        },
+        "dashboard_url": {
+          "type": "string"
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "maintenance_info": {
+          "$ref": "#/definitions/MaintenanceInfo"
+        },
+        "metadata": {
+          "$ref": "#/definitions/ServiceInstanceMetadata"
+        }
+      }
+    },
+    "ServiceInstanceProvisionRequest": {
+      "type": "object",
+      "required": [
+        "service_id",
+        "plan_id",
+        "organization_guid",
+        "space_guid"
+      ],
+      "properties": {
+        "service_id": {
+          "type": "string"
+        },
+        "plan_id": {
+          "type": "string"
+        },
+        "context": {
+          "$ref": "#/definitions/Context"
+        },
+        "organization_guid": {
+          "type": "string",
+          "x-deprecated": true
+        },
+        "space_guid": {
+          "type": "string",
+          "x-deprecated": true
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "maintenance_info": {
+          "$ref": "#/definitions/MaintenanceInfo"
+        }
+      }
+    },
+    "ServiceInstanceProvisionResponse": {
+      "type": "object",
+      "properties": {
+        "dashboard_url": {
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/definitions/ServiceInstanceMetadata"
+        }
+      }
+    },
+    "ServiceInstanceAsyncOperation": {
+      "type": "object",
+      "properties": {
+        "dashboard_url": {
+          "type": "string"
+        },
+        "operation": {
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/definitions/ServiceInstanceMetadata"
+        }
+      }
+    },
+    "ServiceInstanceUpdateRequest": {
+      "type": "object",
+      "required": [
+        "service_id"
+      ],
+      "properties": {
+        "context": {
+          "$ref": "#/definitions/Context"
+        },
+        "service_id": {
+          "type": "string"
+        },
+        "plan_id": {
+          "type": "string"
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "previous_values": {
+          "$ref": "#/definitions/ServiceInstancePreviousValues"
+        },
+        "maintenance_info": {
+          "$ref": "#/definitions/MaintenanceInfo"
+        }
+      }
+    },
+    "ServiceInstancePreviousValues": {
+      "type": "object",
+      "properties": {
+        "service_id": {
+          "type": "string",
+          "x-deprecated": true
+        },
+        "plan_id": {
+          "type": "string"
+        },
+        "organization_id": {
+          "type": "string",
+          "x-deprecated": true
+        },
+        "space_id": {
+          "type": "string",
+          "x-deprecated": true
+        },
+        "maintenance_info": {
+          "$ref": "#/definitions/MaintenanceInfo"
+        }
+      }
+    },
+    "AsyncOperation": {
+      "type": "object",
+      "properties": {
+        "operation": {
+          "type": "string"
+        }
+      }
+    },
+    "LastOperationResource": {
+      "type": "object",
+      "required": [
+        "state"
+      ],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "in progress",
+            "succeeded",
+            "failed"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "instance_usable": {
+          "type": "boolean"
+        },
+        "update_repeatable": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ServiceBindingResource": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/ServiceBindingMetadata"
+        },
+        "credentials": {
+          "type": "object"
+        },
+        "syslog_drain_url": {
+          "type": "string"
+        },
+        "route_service_url": {
+          "type": "string"
+        },
+        "volume_mounts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ServiceBindingVolumeMount"
+          }
+        },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ServiceBindingEndpoint"
+          }
+        },
+        "parameters": {
+          "type": "object"
+        }
+      }
+    },
+    "ServiceBindingRequest": {
+      "type": "object",
+      "required": [
+        "service_id",
+        "plan_id"
+      ],
+      "properties": {
+        "context": {
+          "$ref": "#/definitions/Context"
+        },
+        "service_id": {
+          "type": "string"
+        },
+        "plan_id": {
+          "type": "string"
+        },
+        "app_guid": {
+          "type": "string",
+          "x-deprecated": true
+        },
+        "bind_resource": {
+          "$ref": "#/definitions/ServiceBindingResourceObject"
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "predecessor_binding_id": {
+          "type": "string"
+        }
+      }
+    },
+    "ServiceBindingResourceObject": {
+      "type": "object",
+      "properties": {
+        "app_guid": {
+          "type": "string"
+        },
+        "route": {
+          "type": "string"
+        }
+      }
+    },
+    "ServiceBindingResponse": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/ServiceBindingMetadata"
+        },
+        "credentials": {
+          "type": "object"
+        },
+        "syslog_drain_url": {
+          "type": "string"
+        },
+        "route_service_url": {
+          "type": "string"
+        },
+        "volume_mounts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ServiceBindingVolumeMount"
+          }
+        },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ServiceBindingEndpoint"
+          }
+        }
+      }
+    },
+    "ServiceBindingMetadata": {
+      "type": "object",
+      "properties": {
+        "expires_at": {
+          "type": "string"
+        },
+        "renew_before": {
+          "type": "string"
+        }
+      }
+    },
+    "ServiceBindingEndpoint": {
+      "type": "object",
+      "required": [
+        "host",
+        "ports"
+      ],
+      "properties": {
+        "host": {
+          "type": "string"
+        },
+        "ports": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "protocol": {
+          "type": "string",
+          "enum": [
+            "tcp",
+            "udp",
+            "all"
+          ],
+          "default": "tcp"
+        }
+      }
+    },
+    "ServiceBindingVolumeMount": {
+      "type": "object",
+      "required": [
+        "driver",
+        "container_dir",
+        "mode",
+        "device_type",
+        "device"
+      ],
+      "properties": {
+        "driver": {
+          "type": "string"
+        },
+        "container_dir": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "r",
+            "rw"
+          ]
+        },
+        "device_type": {
+          "type": "string",
+          "enum": [
+            "shared"
+          ]
+        },
+        "device": {
+          "$ref": "#/definitions/ServiceBindingVolumeMountDevice"
+        }
+      }
+    },
+    "ServiceBindingVolumeMountDevice": {
+      "type": "object",
+      "required": [
+        "volume_id"
+      ],
+      "properties": {
+        "volume_id": {
+          "type": "string"
+        },
+        "mount_config": {
+          "type": "object"
+        }
+      }
+    },
+    "ServiceInstanceMetadata": {
+      "type": "object",
+      "properties": {
+        "labels": {
+          "type": "object"
+        },
+        "attributes": {
+          "type": "object"
+        }
+      }
+    },
+    "MaintenanceInfo": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "Context": {
+      "description": "See [Context Conventions](https://github.com/openservicebrokerapi/servicebroker/blob/master/profile.md#context-object) for more details.",
+      "type": "object"
+    },
+    "Metadata": {
+      "description": "See [Service Metadata Conventions](https://github.com/openservicebrokerapi/servicebroker/blob/master/profile.md#service-metadata) for more details.",
+      "type": "object"
+    },
+    "Object": {
+      "type": "object"
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "instance_usable": {
+          "type": "boolean"
+        },
+        "update_repeatable": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

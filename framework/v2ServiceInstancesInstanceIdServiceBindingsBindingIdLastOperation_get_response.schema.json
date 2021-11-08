@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "required": [
+    "state"
+  ],
+  "properties": {
+    "state": {
+      "type": "string",
+      "enum": [
+        "in progress",
+        "succeeded",
+        "failed"
+      ]
+    },
+    "instance_usable": {
+      "type": "boolean"
+    },
+    "update_repeatable": {
+      "type": "boolean"
+    }
+  }
+}
