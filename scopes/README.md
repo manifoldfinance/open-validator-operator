@@ -1,11 +1,13 @@
 # Scopes
 
-This is a small collection of utility functions for Open Validator scopes.
+[see rfc7644](https://datatracker.ietf.org/doc/html/rfc7644)  
+[see scim](http://www.simplecloud.info/)
 
- These scopes are human-readable, fully OAuth2-compatible, and  SHOULD support both pattern matching and set algebra.
+
+Scopes are an abstraction human-readable, fully OAuth2-compatible, and  SHOULD support both pattern matching and set algebra.
 
 
-[Anatomy of a Scope](#anatomy-of-a-scope) | [Installation](#installation) | [API](#api) | [Development](#development)
+[Anatomy of a Scope](#anatomy-of-a-scope)
 
 
 ## Anatomy of a Scope
@@ -20,6 +22,8 @@ pool:vvalidator.abc:read.basic
 ```
 
 Each domain contains segments, separated by the `.` character.
+
+> Note `context` for the validator can be their public key 
 
 ### Scope Literals
 
