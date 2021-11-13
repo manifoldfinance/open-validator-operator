@@ -112,8 +112,58 @@ Service Bindings
   
   
 
-## PubKey Identifier
+## Workflow
 
-https://github.com/sambacha/metamask-decloak/tree/master/pubkey
+<pre>
 
-Public Key: nGU4tXKN+yi5HA1VNE321h/mpvn/34CMelLbl7Br3Hk=
+requesting                             authorization resource resource
+  party        client                      server     server    owner
+    |            |                           |          |         |
+    |            |                           |Set policy|         |
+    |            |                           |conditions (anytime)|
+    |            |                           |<- - - - - - - - - -|
+    |            |Resource request (no access token)    |         |
+    |            |------------------------------------->|         |
+    |            |401 response with initial permission  |         |
+    |            |ticket, authz server location         |         |
+    |            |<-------------------------------------|         |
+    |            |Access token (RPT) request |          |         |
+    |            |with permission ticket,    |          |         |
+    |            |claim token (push claims)  |          |         |
+    |            |-------------------------->|          |         |
+    |            |                      +----|Authz     |         |
+    |            |                      +--->|assessment|         |
+    |            |403 response with new      |          |         |
+    |            |permission ticket,         |          |         |
+    |            |need_info error,           |          |         |
+    |            |redirect_user hint         |          |         |
+    |            |<--------------------------|          |         |
+    |Redirect    |                           |          |         |
+    |user with   |                           |          |         |
+    |permission  |                           |          |         |
+    |ticket      |                           |          |         |
+    |<-----------|                           |          |         |
+    |Follow redirect to authz server         |          |         |
+    |--------------------------------------->|          |         |
+    |Interactive claims gathering            |          |         |
+    |<- - - - - - - - - - - - - - - - - - - >|          |         |
+    |Redirect back with new permission       |          |         |
+    |ticket                                  |          |         |
+    |<---------------------------------------|          |         |
+    |Follow      |                           |          |         |
+    |redirect    |                           |          |         |
+    |to client   |                           |          |         |
+    |----------->|                           |          |         |
+    |            |RPT request with permission|          |         |
+    |            |ticket                     |          |         |
+    |            |-------------------------->|          |         |
+    |            |                      +----|Authz     |         |
+    |            |                      +--->|assessment|         |
+    |            |Response with RPT and PCT  |          |         |
+    |            |<--------------------------|          |         |
+    |            |Resource request with RPT  |          |         |
+    |            |------------------------------------->|         |
+    |            |Protected resource         |          |         |
+    |            |<-------------------------------------|         |
+
+</pre>
