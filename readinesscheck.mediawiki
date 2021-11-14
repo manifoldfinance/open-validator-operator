@@ -1,0 +1,37 @@
+{| class="wikitable" 
+|-
+! Field
+! Default
+! Range (Minimum-Maximum)
+! Description
+|-
+| path
+| None
+| 
+| If you want readiness checks to be forwarded to your application container, specify a URL path, such as "/readiness_check"
+|-
+| timeout_sec
+| 4 seconds
+| 1-300
+| Timeout interval for each request, in seconds.
+|-
+| check_interval_sec
+| 5 seconds
+| 1-300
+| Time interval between checks, in seconds. Note that this value must be greater than timeout_sec.
+|-
+| failure_threshold
+| 2 checks
+| 1-10
+| An instance is unhealthy after failing this number of consecutive checks.
+|-
+| success_threshold
+| 2 checks
+| 1-10
+| An unhealthy instance becomes healthy after successfully responding to this number of consecutive checks.
+|-
+| app_start_timeout_sec
+| 300 seconds
+| 1-1800
+| This setting applies to new deployments, not individual VMs. It specifies the maximum time in seconds allowed for a sufficient number of instances in a deployment to pass health checks. If this duration is exceeded then the deployment fails and is rolled back. The timer starts when the Compute Engine instances have been provisioned and the Load Balancer backend service has been created. For example, you might want to increase the timeout if you wish to provide longer timeouts during deployments for a sufficient number of instances to become healthy.
+|}
